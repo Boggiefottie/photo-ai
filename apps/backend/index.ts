@@ -207,8 +207,8 @@ app.post("/pack/generate",authMiddleware , async(req, res) => {
     })
     
 })
-app.get("/pack/bulk", (req, res) => {
-    const packs = prismaClient.packs.findMany({})
+app.get("/pack/bulk", async(req, res) => {
+    const packs = await prismaClient.packs.findMany({})
     res.json({
         packs: packs
     })
