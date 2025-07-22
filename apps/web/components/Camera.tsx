@@ -25,6 +25,7 @@ export  function Camera() {
       })()
     },[])
   return <div>
+    
     {images.map(image => <ImageCard {...image}/>)}
   </div>
 }

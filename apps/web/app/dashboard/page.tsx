@@ -5,9 +5,9 @@ import {Train} from "@/components/Train"
 import { Camera } from "@/components/Camera"
 export default function Dashbaord() {
     return <div className="flex justify-center">
-        <div className="w-8xl">
+        <div className="max-w-6xl">
         <div className="flex justify-center">
-        <Tabs defaultValue="camera" className="w-4xl">
+        <Tabs defaultValue="camera">
   <div className="flex justify-center">
   <TabsList>
   <TabsTrigger value="camera">Camera</TabsTrigger>
