@@ -24,8 +24,8 @@ export  function Camera() {
          setImages(response.data.images)
       })()
     },[])
-  return <div>
-    
+  return <div className="grid md:grid-cols-4 grid-cols-1">
+
     {images.map(image => <ImageCard {...image}/>)}
   </div>
 }

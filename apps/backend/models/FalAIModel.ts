@@ -38,4 +38,16 @@ export class FalAIModel {
     // console.log("Model training submitted:", request_id);
     return { request_id :"", response_url:"" };
   }
+  public async generateImageSync(tensorPath: string){
+     const response = await fal.subscribe("fal-ai/flux-lora", {
+        input: {
+          prompt: "Generate a head shot for this user in front of white background",
+          loras: [{ path: tensorPath, scale: 1 }],
+                
+          },
+      })
+      return {
+        imageUrl : response.data.images[0]?.url
+      }
+  }
 }  
