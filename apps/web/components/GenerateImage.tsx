@@ -14,6 +14,7 @@ interface TModel {
 }
 
 export function GenerateImage(){
+    const [prompt , setPrompt] = useState("")
     const [models, setModels] = useState<TModel[]>([]);
     const [selectedModel, setSelectedModel] = useState<string>()
     const [modelLoading, setModelLoading] = useState(true);
@@ -58,10 +59,18 @@ export function GenerateImage(){
             
             </div>}
          <div className="flex justify-center pt-4">
-        <Textarea placeholder="Describe the image that you would liked to see here"  className="px-4 w-2xl border border-blue-200 hover:border-blue-300 focus:border-blue-300 outline-none"></Textarea>
+        <Textarea onChange={(e)=>{
+            setPrompt(e.target.value)
+        }} placeholder="Describe the image that you would liked to see here"  className="px-4 w-2xl border border-blue-200 hover:border-blue-300 focus:border-blue-300 outline-none"></Textarea>
         </div>
         <div className="flex justify-center pt-4">
-        <Button variant={"secondary"}>Create Image</Button>
+        <Button onClick={async()=>{
+           await axios.post(`${BACKEND_URL}"/ai/generate`,{
+                prompt,
+                modelId: selectedModel,
+                num: 1
+            })
+        }} variant={"secondary"}>Create Image</Button>
         </div>
        
         </div>

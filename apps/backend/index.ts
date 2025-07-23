@@ -238,7 +238,8 @@ app.get("/models", authMiddleware, async (req,res)=>{
 
     const models = await prismaClient.model.findMany({
         where: {
-            userId: req.userId,
+            OR: [{userId: req.userId},{open: true}]
+            
         }
     })
     console.log("📦 models:", models);
