@@ -92,88 +92,92 @@ app.get("/", (req, res) => {
 
 
 
-// app.post("/ai/training",authMiddleware ,async(req, res) => {
-//    try { 
-//   const parsedBody = TrainModel.safeParse(req.body)
-//   const images = req.body.images as string
-//     console.log(req.userId)
-//     if (!parsedBody.success) {  
-//         res.status(411).json({ 
-//            message : "Input Incorrect"
-//         })
-//         return
-//     }
-//   const{request_id , response_url} =  await falAiModel.trainModel(parsedBody.data.zipUrl,parsedBody.data.name)
-//     const data = await prismaClient.model.create({
-//         data: {
-//             name: parsedBody.data.name,
-//             type:  parsedBody.data.type,
-//             age:  parsedBody.data.age,
-//             ethnicity:  parsedBody.data.ethnicity,
-//             eyeColor:  parsedBody.data.eyeColor,
-//             bald:  parsedBody.data.bald,
-//             userId: req.userId!,
-//             zipUrl: parsedBody.data.zipUrl,
-//             falAiRequestId: request_id,
-
-//         }
-//     })
-//     res.status(200).json({
-//         modelId: data.id,
-//     })
-// } catch (error) {
-//     console.error("Error in training model:", error);
-// }
-    
-// })
-app.post("/ai/training", authMiddleware, async (req, res) => {
-    try {
-      const parsedBody = TrainModel.safeParse(req.body);
-      const images = req.body.images as string;
-  
-      console.log(req.userId);
-  
-      if (!parsedBody.success) {
-        res.status(411).json({
-          message: "Input Incorrect"
-        });
-        return;
-      }
-  
-      const useMock = process.env.NODE_ENV === "development";
-  
-      const { request_id, response_url } = useMock
-        ? {
-            request_id: "mocked_train_" + Date.now(),
-            response_url: "https://placehold.co/600x400?text=Training+Preview",
-          }
-        : await falAiModel.trainModel(parsedBody.data.zipUrl, parsedBody.data.name);
-  
-      const data = await prismaClient.model.create({
-        data: {
-          name: parsedBody.data.name,
-          type: parsedBody.data.type,
-          age: parsedBody.data.age,
-          ethnicity: parsedBody.data.ethnicity,
-          eyeColor: parsedBody.data.eyeColor,
-          bald: parsedBody.data.bald,
-          userId: req.userId!,
-          zipUrl: parsedBody.data.zipUrl,
-          falAiRequestId: request_id,
-        }
-      });
-  
-      res.status(200).json({
-        modelId: data.id,
-      });
-    } catch (error) {
-      console.error("Error in training model:", error);
-      res.status(500).json({
-        message: "Something went wrong during model training",
-        error: error instanceof Error ? error.message : error,
-      });
+app.post("/ai/training",authMiddleware ,async(req, res) => {
+   try { 
+  const parsedBody = TrainModel.safeParse(req.body)
+  const images = req.body.images as string
+    console.log(req.userId)
+    if (!parsedBody.success) {  
+        res.status(411).json({ 
+           message : "Input Incorrect"
+        })
+        return
     }
-  });
+  const{request_id , response_url} =  await falAiModel.trainModel(parsedBody.data.zipUrl,parsedBody.data.name)
+    const data = await prismaClient.model.create({
+        data: {
+            name: parsedBody.data.name,
+            type:  parsedBody.data.type,
+            age:  parsedBody.data.age,
+            ethnicity:  parsedBody.data.ethnicity,
+            eyeColor:  parsedBody.data.eyeColor,
+            bald:  parsedBody.data.bald,
+            userId: req.userId!,
+            zipUrl: parsedBody.data.zipUrl,
+            falAiRequestId: request_id,
+
+        }
+    })
+    res.status(200).json({
+        modelId: data.id,
+    })
+} catch (error) {
+    console.error("Error in training model:", error);
+}
+    
+})
+
+
+//*********** */
+
+// app.post("/ai/training", authMiddleware, async (req, res) => {
+//     try {
+//       const parsedBody = TrainModel.safeParse(req.body);
+//       const images = req.body.images as string;
+  
+//       console.log(req.userId);
+  
+//       if (!parsedBody.success) {
+//         res.status(411).json({
+//           message: "Input Incorrect"
+//         });
+//         return;
+//       }
+  
+//       const useMock = process.env.NODE_ENV === "development";
+  
+//       const { request_id, response_url } = useMock
+//         ? {
+//             request_id: "mocked_train_" + Date.now(),
+//             response_url: "https://placehold.co/600x400?text=Training+Preview",
+//           }
+//         : await falAiModel.trainModel(parsedBody.data.zipUrl, parsedBody.data.name);
+  
+//       const data = await prismaClient.model.create({
+//         data: {
+//           name: parsedBody.data.name,
+//           type: parsedBody.data.type,
+//           age: parsedBody.data.age,
+//           ethnicity: parsedBody.data.ethnicity,
+//           eyeColor: parsedBody.data.eyeColor,
+//           bald: parsedBody.data.bald,
+//           userId: req.userId!,
+//           zipUrl: parsedBody.data.zipUrl,
+//           falAiRequestId: request_id,
+//         }
+//       });
+  
+//       res.status(200).json({
+//         modelId: data.id,
+//       });
+//     } catch (error) {
+//       console.error("Error in training model:", error);
+//       res.status(500).json({
+//         message: "Something went wrong during model training",
+//         error: error instanceof Error ? error.message : error,
+//       });
+//     }
+//   });
   
 
 app.post("/ai/generate",authMiddleware , async(req, res) => {
