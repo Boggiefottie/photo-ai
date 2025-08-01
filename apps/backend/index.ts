@@ -25,7 +25,10 @@ const falAiModel = new FalAIModel()
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: true,
+    credentials: true,
+}))
 
 const s3 = new S3Client({
     region: "auto", 
@@ -268,32 +271,64 @@ app.get("/pack/bulk", async(req, res) => {
         packs: packs
     })
 })
-app.get("/image/bulk",authMiddleware ,async (req, res) => {
-    const ids = req.query.images as string[]
-    const limit = req.query.limit as string ?? "10"
-    const offset = req.query.offset as string ?? "0"
+// app.get("/image/bulk",authMiddleware ,async (req, res) => {
+//     const ids = req.query.images as string[]
+//     const limit = req.query.limit as string ?? "10"
+//     const offset = req.query.offset as string ?? "0"
 
-    console.log(ids)
+//     console.log(ids)
     
 
-    const imagesData = await prismaClient.outputImages.findMany({
-       where: {
-        id: {in: ids},
+//     const imagesData = await prismaClient.outputImages.findMany({
+//        where: {
+//         id: {in: ids},
+//         userId: req.userId!,
+//         status: {
+//             not: "Failed"
+//         }
+//        },
+//     orderBy:{
+//       createdAt: "desc"
+//     },
+//     skip: parseInt(offset),
+//     take: parseInt(limit)
+//     })
+//     res.json({
+//         images: imagesData
+//     })
+// })
+
+app.get("/image/bulk", authMiddleware, async (req, res) => {
+    const ids = req.query.images as string[] | undefined;
+    const limit = req.query.limit as string ?? "10";
+    const offset = req.query.offset as string ?? "0";
+
+    const where: any = {
         userId: req.userId!,
         status: {
             not: "Failed"
         }
-       },
-    orderBy:{
-      createdAt: "desc"
-    },
-    skip: parseInt(offset),
-    take: parseInt(limit)
-    })
+    };
+
+    if (ids && ids.length > 0) {
+        where.id = { in: ids };
+    }
+
+    const imagesData = await prismaClient.outputImages.findMany({
+        where,
+        orderBy: {
+            createdAt: "desc"
+        },
+        skip: parseInt(offset),
+        take: parseInt(limit)
+    });
+
     res.json({
         images: imagesData
-    })
-})
+    });
+});
+
+
 app.get("/models", authMiddleware, async (req,res)=>{
     console.log("📞 /models hit");
   console.log("👤 userId:", req.userId);

@@ -1,37 +1,98 @@
-"use client"
+// "use client"
 
 
-import { BACKEND_URL } from "@/app/config"
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { useAuth } from '@clerk/nextjs';
-import { ImageCard, ImageCardSkeleton, TImage } from './ImageCard';
-import { Skeleton } from "./ui/skeleton";
+// import { BACKEND_URL } from "@/app/config"
+// import axios from "axios"
+// import { useEffect, useState } from "react"
+// import { useAuth } from '@clerk/nextjs';
+// import { ImageCard, ImageCardSkeleton, TImage } from './ImageCard';
+// import { Skeleton } from "./ui/skeleton";
 
 
 
 
-export  function Camera() {
-    const [images, setImages] = useState<TImage[]>([])
-    const[imagesLoading, setImagesLoading] = useState(true) ;
-    const {getToken}= useAuth()
-    useEffect(() => {
-      (async()=>{
-        const token = await getToken()
-        const response = await axios.get(`${BACKEND_URL}/image/bulk`,{
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-         })
-         setImages(response.data.images)
-         setImagesLoading(false)
-      })()
-    },[])
-  return <div className="grid md:grid-cols-4 grid-cols-1 gap-2">
+// export  function Camera() {
+//     const [images, setImages] = useState<TImage[]>([])
+//     const[imagesLoading, setImagesLoading] = useState(true) ;
+//     const {getToken}= useAuth()
+//     useEffect(() => {
+//       (async()=>{
+//         const token = await getToken()
+//         const response = await axios.get(`${BACKEND_URL}/image/bulk`,{
+//             headers: {
+//                 Authorization: `Bearer ${token}`
+//             }
+//          })
+//          setImages(response.data.images)
+//          setImagesLoading(false)
+//       })()
+//     },[])
+//   return <div className="grid md:grid-cols-4 grid-cols-1 gap-2">
 
-    {images.map(image => <ImageCard key={image.id}{...image}/>)}
-    {imagesLoading && <><ImageCardSkeleton key="skeleton-1" ></ImageCardSkeleton> <ImageCardSkeleton key="skeleton-2" ></ImageCardSkeleton> </>}
-  </div>
+//     {images.map(image => <ImageCard key={image.id}{...image}/>)}
+//     {imagesLoading && <><ImageCardSkeleton key="skeleton-1" ></ImageCardSkeleton> <ImageCardSkeleton key="skeleton-2" ></ImageCardSkeleton> </>}
+//   </div>
+// }
+
+"use client";
+
+import { BACKEND_URL } from "@/app/config";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { ImageCard, ImageCardSkeleton, TImage } from "./ImageCard";
+
+export function Camera() {
+  const [images, setImages] = useState<TImage[]>([]);
+  const [imagesLoading, setImagesLoading] = useState(true);
+  const { getToken } = useAuth();
+
+  const fetchImages = async () => {
+    try {
+      const token = await getToken();
+      const response = await axios.get(`${BACKEND_URL}/image/bulk`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Compare and update only if different
+      const newImages = response.data.images;
+      const isNew = newImages.length !== images.length;
+      if (isNew) {
+        setImages(newImages);
+      }
+
+      setImagesLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch images:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchImages(); // fetch once on mount
+
+    const intervalId = setInterval(() => {
+      fetchImages(); // fetch every 5 seconds
+    }, 5000);
+
+    return () => clearInterval(intervalId); // cleanup on unmount
+  }, []);
+
+  return (
+    <div className="grid md:grid-cols-4 grid-cols-1 gap-2">
+      {images.map((image) => (
+        <ImageCard key={image.id} {...image} />
+      ))}
+
+      {imagesLoading && (
+        <>
+          <ImageCardSkeleton key="skeleton-1" />
+          <ImageCardSkeleton key="skeleton-2" />
+        </>
+      )}
+    </div>
+  );
 }
 
 
