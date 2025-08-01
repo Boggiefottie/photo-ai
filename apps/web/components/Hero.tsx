@@ -28,13 +28,13 @@ export function Hero()  {
         </h1>
         <Carousel>
   <CarouselContent >
-    <CarouselItem className="basis-1/4"><img src="https://photoai.com/cdn-cgi/image/format=jpeg,fit=cover,width=300,height=450,quality=50/https://r2-us-west.photoai.com/1726230043-3e324960f58207e461536870caddf422-4.png" /></CarouselItem>
-    <CarouselItem className="basis-1/4"><img src="https://photoai.com/cdn-cgi/image/format=jpeg,fit=cover,width=300,height=450,quality=50/https://r2-us-west.photoai.com/1726178755-9f7972c92244429208d500c856fea798-3.png"/></CarouselItem>
-    <CarouselItem className="basis-1/4"><img src="https://photoai.com/cdn-cgi/image/format=jpeg,fit=cover,width=300,height=450,quality=50/https://r2-us-west.photoai.com/1738958440-fd64af31e47902a720026225adc2f4af-1.png"/></CarouselItem>
-    <CarouselItem className="basis-1/4"><img src="https://photoai.com/cdn-cgi/image/format=jpeg,fit=cover,width=300,height=450,quality=50/https://r2-us-west.photoai.com/1725212295-f6b06d5a18a0dc06d192724e09576035-3.png" /></CarouselItem>
-    <CarouselItem className="basis-1/4"><img src="https://photoai.com/cdn-cgi/image/format=jpeg,fit=cover,width=300,height=450,quality=50/https://r2-us-west.photoai.com/1726223549-b9430e254898a2ebc041c40876a4f0ee-3.png" /></CarouselItem>
-    <CarouselItem className="basis-1/4"><img src="https://photoai.com/cdn-cgi/image/format=jpeg,fit=cover,width=300,height=450,quality=50/https://r2-us-west.photoai.com/1726229749-33d7a0159a787c9853ba0424bd7104d6-2.png" /></CarouselItem>
-    <CarouselItem className="basis-1/4"><img src="https://photoai.com/cdn-cgi/image/format=jpeg,fit=cover,width=300,height=450,quality=50/https://r2-us-west.photoai.com/1749316067-53d9117674de9a783aa896ae6025f30f-3.png" /></CarouselItem>
+    <CarouselItem className="basis-1/4"><img src="https://v3.fal.media/files/tiger/Dtvy54RgSlk3g97Vwf8wU_1cd17d8fb03d4b37b4b16160407b6263.jpg" /></CarouselItem>
+    <CarouselItem className="basis-1/4"><img src="https://v3.fal.media/files/kangaroo/o5gVN99Ocyxu_TDbpLaQj_9b1993bbfae643ad903f0c2096c037b9.jpg"/></CarouselItem>
+    <CarouselItem className="basis-1/4"><img src="https://v3.fal.media/files/kangaroo/oICOlKFFFDSjLA4TIR3a9_7d0f4f005cc4435f84424dd20d25ffda.jpg"/></CarouselItem>
+    <CarouselItem className="basis-1/4"><img src="https://v3.fal.media/files/zebra/yv5RHfp3BG7a_TD9YjpMC_3b9b5730d3eb44b19643d2f0788781cc.jpg" /></CarouselItem>
+    <CarouselItem className="basis-1/4"><img src="https://v3.fal.media/files/zebra/gvDe3RU4V7QNQdD1NVIAm_ec07b2eaf2ca4bb89addc7598b4dafc4.jpg" /></CarouselItem>
+    <CarouselItem className="basis-1/4"><img src="https://v3.fal.media/files/monkey/_J8hgsrTwO2mSqU7gQg0f_220b74e36a614db9a7aee657243c1a90.jpg" /></CarouselItem>
+    <CarouselItem className="basis-1/4"><img src="https://v3.fal.media/files/rabbit/FE_6o-LVq0bvcgWlZBAZ5_7e185349f35040aa845688e2f37e2681.jpg" /></CarouselItem>
   </CarouselContent>
   <CarouselPrevious />
   <CarouselNext />
